@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ui/pages/login_page.dart';
+import 'ui/pages/pagina_login.dart';
 
 class DeliveryApp extends StatelessWidget {
   @override
@@ -14,7 +14,7 @@ class DeliveryApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Colors.yellow),
         ),
       ),
-      home: LoginPage(),
+      home: PaginaLogin(),
     );
   }
 }

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'register_page.dart';
+import 'pagina_inicial.dart'; // novo nome do arquivo traduzido
+import 'pagina_cadastro.dart'; // novo nome do arquivo traduzido
 
-class LoginPage extends StatefulWidget {
+class PaginaLogin extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _EstadoPaginaLogin createState() => _EstadoPaginaLogin();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  bool showLoginFields = false;
-  String userType = 'Cliente';
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class _EstadoPaginaLogin extends State<PaginaLogin> {
+  bool mostrarCamposLogin = false;
+  String tipoUsuario = 'Cliente';
+
+  final TextEditingController controladorEmail = TextEditingController();
+  final TextEditingController controladorSenha = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,46 +22,51 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('lib/assets/logo.png', height: 100),
-            Text('SPEEDLOG', style: TextStyle(color: Colors.yellow, fontSize: 24, fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
-            if (!showLoginFields) ...[
+
+            if (!mostrarCamposLogin) ...[
               DropdownButton<String>(
-                value: userType,
+                value: tipoUsuario,
                 dropdownColor: Colors.black,
                 style: TextStyle(color: Colors.yellow),
-                items: ['Cliente', 'Motorista'].map((String value) {
+                items: ['Cliente', 'Motorista'].map((String valor) {
                   return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
+                    value: valor,
+                    child: Text(valor),
                   );
                 }).toList(),
-                onChanged: (String? newValue) {
+                onChanged: (String? novoValor) {
                   setState(() {
-                    userType = newValue!;
+                    tipoUsuario = novoValor!;
                   });
                 },
               ),
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
                 onPressed: () {
                   setState(() {
-                    showLoginFields = true;
+                    mostrarCamposLogin = true;
                   });
                 },
                 child: Text('Login', style: TextStyle(color: Colors.black)),
               ),
+
               SizedBox(height: 20),
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
                 onPressed: () {
                   Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                    context,
+                    MaterialPageRoute(builder: (context) => PaginaCadastro()),
                   );
                 },
                 child: Text('Cadastro', style: TextStyle(color: Colors.black)),
               ),
+
               SizedBox(height: 20),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -69,30 +75,42 @@ class _LoginPageState extends State<LoginPage> {
                   Icon(Icons.apple, color: Colors.yellow, size: 40),
                 ],
               ),
-            ] else ...[
+            ]
+            else ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    Text('Login como: $userType', style: TextStyle(color: Colors.yellow, fontSize: 18)),
+                    Text('Login como: $tipoUsuario', style: TextStyle(color: Colors.yellow, fontSize: 18)),
                     SizedBox(height: 10),
+
                     TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
+                      controller: controladorEmail,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
+
                     SizedBox(height: 10),
+
                     TextField(
-                      controller: passwordController,
+                      controller: controladorSenha,
                       obscureText: true,
-                      decoration: InputDecoration(labelText: 'Senha', border: OutlineInputBorder()),
+                      decoration: InputDecoration(
+                        labelText: 'Senha',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
+
                     SizedBox(height: 20),
+
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
                       onPressed: () {
                         Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                          context,
+                          MaterialPageRoute(builder: (context) => PaginaInicial()),
                         );
                       },
                       child: Text('Entrar', style: TextStyle(color: Colors.black)),

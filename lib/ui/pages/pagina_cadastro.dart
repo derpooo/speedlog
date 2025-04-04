@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget {
+class PaginaCadastro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,22 +13,33 @@ class RegisterPage extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              decoration: InputDecoration(labelText: 'Nome', labelStyle: TextStyle(color: Colors.yellow)),
+              decoration: InputDecoration(
+                labelText: 'Nome',
+                labelStyle: TextStyle(color: Colors.yellow),
+              ),
               style: TextStyle(color: Colors.yellow),
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'E-mail', labelStyle: TextStyle(color: Colors.yellow)),
+              decoration: InputDecoration(
+                labelText: 'E-mail',
+                labelStyle: TextStyle(color: Colors.yellow),
+              ),
               style: TextStyle(color: Colors.yellow),
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Senha', labelStyle: TextStyle(color: Colors.yellow)),
+              decoration: InputDecoration(
+                labelText: 'Senha',
+                labelStyle: TextStyle(color: Colors.yellow),
+              ),
               obscureText: true,
               style: TextStyle(color: Colors.yellow),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
-              onPressed: () {},
+              onPressed: () {
+                // Aqui você pode adicionar lógica para salvar o cadastro
+              },
               child: Text('Registrar', style: TextStyle(color: Colors.black)),
             ),
           ],
@@ -37,4 +48,3 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
-
