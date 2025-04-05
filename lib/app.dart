@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'ui/pages/pagina_login.dart';
 
 class DeliveryApp extends StatelessWidget {
@@ -8,10 +9,10 @@ class DeliveryApp extends StatelessWidget {
       title: 'SpeedLog',
       theme: ThemeData(
         primaryColor: Colors.black,
-        scaffoldBackgroundColor: Colors.black,
-        textTheme: TextTheme(
-          bodyLarge: TextStyle(color: Colors.yellow),
-          bodyMedium: TextStyle(color: Colors.yellow),
+        scaffoldBackgroundColor: Colors.grey,
+        textTheme: GoogleFonts.poppinsTextTheme().copyWith(
+          bodyLarge: GoogleFonts.poppins(color: Colors.yellow),
+          bodyMedium: GoogleFonts.poppins(color: Colors.yellow),
         ),
       ),
       home: PaginaLogin(),
