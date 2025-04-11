@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pagina_busca.dart';
 
 class PaginaInicial extends StatefulWidget {
   @override
@@ -12,12 +13,18 @@ class _EstadoPaginaInicial extends State<PaginaInicial> {
   String categoriaSelecionada = "Mercado";
 
   final List<Map<String, dynamic>> motoristas = [
-    {'nome': 'João', 'categorias': ['Mercado', 'Pets']},
-    {'nome': 'Maria', 'categorias': ['Saúde', 'Móveis/Eletrodomésticos']},
-    {'nome': 'Carlos', 'categorias': ['Mercado', 'Saúde']},
-    {'nome': 'Ana', 'categorias': ['Pets', 'Móveis/Eletrodomésticos']},
-    {'nome': 'Pedro', 'categorias': ['Mercado']},
-  ];
+  {'nome': 'João', 'categorias': ['Mercado', 'Pets']},
+  {'nome': 'Maria', 'categorias': ['Saúde', 'Móveis/Eletrodomésticos']},
+  {'nome': 'Carlos', 'categorias': ['Mercado', 'Saúde']},
+  {'nome': 'Ana', 'categorias': ['Pets', 'Móveis/Eletrodomésticos']},
+  {'nome': 'Pedro', 'categorias': ['Mercado']},
+  {'nome': 'Fernanda', 'categorias': ['Mercado', 'Saúde', 'Pets']},
+  {'nome': 'Ricardo', 'categorias': ['Móveis/Eletrodomésticos']},
+  {'nome': 'Juliana', 'categorias': ['Saúde', 'Pets']},
+  {'nome': 'Bruno', 'categorias': ['Mercado', 'Móveis/Eletrodomésticos']},
+  {'nome': 'Larissa', 'categorias': ['Pets']},
+];
+
 
   final Map<String, List<String>> itensPorCategoria = {
     "Mercado": ["Arroz", "Feijão", "Leite", "Pão", "Ovos"],
@@ -35,18 +42,11 @@ class _EstadoPaginaInicial extends State<PaginaInicial> {
 
     return Scaffold(
       extendBody: true, // Faz a Bottom Navigation flutuar
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Image.asset(
-        'lib/assets/logo2.png',
-        height: 40),
-        automaticallyImplyLeading: false,
-      ),
       body: Column(
         children: [
           //  Mostra apenas motoristas compatíveis com a categoria
           SizedBox(
-            height: 120,
+            height: 150,
             child: Padding(
               padding: const EdgeInsets.only(top: 20),
               child: ListView.separated(
@@ -108,14 +108,72 @@ class _EstadoPaginaInicial extends State<PaginaInicial> {
           // Lista de itens filtrados da categoria selecionada
           Expanded(
             child: ListView.builder(
+
+              padding: EdgeInsets.all(10),
               itemCount: itensPorCategoria[categoriaSelecionada]?.length ?? 0,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    itensPorCategoria[categoriaSelecionada]![index],
-                    style: TextStyle(color: Colors.black),
+                String item = itensPorCategoria[categoriaSelecionada]![index];
+
+                // Imagens genéricas de exemplo 
+                final imagensExemplo = {
+                  "Arroz": "https://cdn-icons-png.flaticon.com/512/1046/1046751.png",
+                  "Feijão": "https://cdn-icons-png.flaticon.com/512/2909/2909593.png",
+                  "Leite": "https://cdn-icons-png.flaticon.com/512/2718/2718224.png",
+                  "Pão": "https://cdn-icons-png.flaticon.com/512/4387/4387742.png",
+                  "Ovos": "https://cdn-icons-png.flaticon.com/512/590/590685.png",
+                  "Remédios": "https://cdn-icons-png.flaticon.com/512/1474/1474769.png",
+                  "Vitaminas": "https://cdn-icons-png.flaticon.com/512/2838/2838912.png",
+                  "Máscaras": "https://cdn-icons-png.flaticon.com/512/3134/3134704.png",
+                  "Álcool Gel": "https://cdn-icons-png.flaticon.com/512/3097/3097131.png",
+                  "Ração": "https://cdn-icons-png.flaticon.com/512/616/616430.png",
+                  "Brinquedos": "https://cdn-icons-png.flaticon.com/512/3105/3105927.png",
+                  "Petiscos": "https://cdn-icons-png.flaticon.com/512/2933/2933828.png",
+                  "Areia para gatos": "https://cdn-icons-png.flaticon.com/512/3038/3038315.png",
+                  "Sofá": "https://cdn-icons-png.flaticon.com/512/1034/1034652.png",
+                  "Geladeira": "https://cdn-icons-png.flaticon.com/512/3389/3389051.png",
+                  "Fogão": "https://cdn-icons-png.flaticon.com/512/3710/3710565.png",
+                  "Cadeira": "https://cdn-icons-png.flaticon.com/512/3442/3442377.png",
+                };
+
+                // Gera um preço aleatório só pra exemplo
+                double preco = 5 + (index * 3.5);
+
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
                   ),
-                  leading: Icon(Icons.circle, color: Colors.black),
+                  child: Row(
+                   children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          imagensExemplo[item] ?? "",
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          item,
+                          style: TextStyle(
+                            fontSize: 16, 
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "R\$ ${preco.toStringAsFixed(2)}",
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.green.shade700),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
@@ -146,7 +204,12 @@ class _EstadoPaginaInicial extends State<PaginaInicial> {
                   ),
                   IconButton(
                     icon: Icon(Icons.calendar_today, color: _indiceAtual == 2 ? Colors.yellow : Colors.white),
-                    onPressed: () => setState(() => _indiceAtual = 2),
+                    onPressed: () { setState(() => _indiceAtual = 2);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PaginaBusca()),
+                      );
+                    }
                   ),
                   IconButton(
                     icon: Icon(Icons.person, color: _indiceAtual == 3 ? Colors.yellow : Colors.white),
