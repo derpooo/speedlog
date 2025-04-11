@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PaginaBusca extends StatefulWidget {
+  const PaginaBusca({super.key});
+
   @override
   _PaginaBuscaState createState() => _PaginaBuscaState();
 }

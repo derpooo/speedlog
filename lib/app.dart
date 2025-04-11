@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'ui/pages/pagina_login.dart';
 
 class DeliveryApp extends StatelessWidget {
+  const DeliveryApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

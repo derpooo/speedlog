@@ -3,6 +3,8 @@ import 'pagina_inicial.dart'; // novo nome do arquivo traduzido
 import 'pagina_cadastro.dart'; // novo nome do arquivo traduzido
 
 class PaginaLogin extends StatefulWidget {
+  const PaginaLogin({super.key});
+
   @override
   _EstadoPaginaLogin createState() => _EstadoPaginaLogin();
 }

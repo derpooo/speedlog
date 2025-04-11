@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'pagina_busca.dart';
 
 class PaginaInicial extends StatefulWidget {
+  const PaginaInicial({super.key});
+
   @override
   _EstadoPaginaInicial createState() => _EstadoPaginaInicial();
 }
