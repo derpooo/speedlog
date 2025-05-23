@@ -85,9 +85,9 @@ class _EstadoPaginaLogin extends State<PaginaLogin> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.login, color: Colors.yellow, size: 40),
-                  Icon(Icons.facebook, color: Colors.yellow, size: 40),
-                  Icon(Icons.apple, color: Colors.yellow, size: 40),
+                  Icon(Icons.login, color: const Color.fromARGB(255, 0, 0, 0), size: 40),
+                  Icon(Icons.facebook, color: const Color.fromARGB(255, 0, 0, 0), size: 40),
+                  Icon(Icons.apple, color: const Color.fromARGB(255, 0, 0, 0), size: 40),
                 ],
               ),
             ]
