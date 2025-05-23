@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'pagina_inicial.dart'; // novo nome do arquivo traduzido
-import 'pagina_cadastro.dart'; // novo nome do arquivo traduzido
+import 'pagina_inicial.dart'; 
+import 'pagina_cadastro.dart'; 
+import 'registrar_motorista.dart';
+import 'barra_navegacao.dart';
 
 class PaginaLogin extends StatefulWidget {
   const PaginaLogin({super.key});
@@ -16,6 +18,13 @@ class _EstadoPaginaLogin extends State<PaginaLogin> {
   final TextEditingController controladorEmail = TextEditingController();
   final TextEditingController controladorSenha = TextEditingController();
 
+  void _navegarParaHome() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => BarraNavegacao()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +38,8 @@ class _EstadoPaginaLogin extends State<PaginaLogin> {
             if (!mostrarCamposLogin) ...[
               DropdownButton<String>(
                 value: tipoUsuario,
-                dropdownColor: Colors.black,
-                style: TextStyle(color: Colors.yellow),
+                dropdownColor: Colors.yellow,
+                style: TextStyle(color: Colors.black),
                 items: ['Cliente', 'Motorista'].map((String valor) {
                   return DropdownMenuItem<String>(
                     value: valor,
@@ -61,7 +70,11 @@ class _EstadoPaginaLogin extends State<PaginaLogin> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PaginaCadastro()),
+                    MaterialPageRoute(
+                      builder: (context) => tipoUsuario == 'Motorista'
+                          ? RegistrarMotorista()
+                          : PaginaCadastro(),
+                    ),
                   );
                 },
                 child: Text('Cadastro', style: TextStyle(color: Colors.black)),
@@ -83,7 +96,7 @@ class _EstadoPaginaLogin extends State<PaginaLogin> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    Text('Login como: $tipoUsuario', style: TextStyle(color: Colors.yellow, fontSize: 18)),
+                    Text('Login como: $tipoUsuario', style: TextStyle(color: Colors.black, fontSize: 18)),
                     SizedBox(height: 10),
 
                     TextField(
@@ -109,12 +122,7 @@ class _EstadoPaginaLogin extends State<PaginaLogin> {
 
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => PaginaInicial()),
-                        );
-                      },
+                      onPressed: _navegarParaHome,
                       child: Text('Entrar', style: TextStyle(color: Colors.black)),
                     ),
                   ],

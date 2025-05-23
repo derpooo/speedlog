@@ -11,10 +11,10 @@ class DeliveryApp extends StatelessWidget {
       title: 'SpeedLog',
       theme: ThemeData(
         primaryColor: Colors.black,
-        scaffoldBackgroundColor: Colors.grey,
+        scaffoldBackgroundColor: Colors.white,
         textTheme: GoogleFonts.poppinsTextTheme().copyWith(
-          bodyLarge: GoogleFonts.poppins(color: Colors.yellow),
-          bodyMedium: GoogleFonts.poppins(color: Colors.yellow),
+          bodyLarge: GoogleFonts.poppins(color: Colors.black),
+          bodyMedium: GoogleFonts.poppins(color: Colors.black),
         ),
       ),
       home: PaginaLogin(),
