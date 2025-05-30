@@ -6,11 +6,17 @@ class Produto {
   final String nome;
   final String categoria;
   final double preco;
+  final String descricao;
   int quantidade;
 
-  Produto({required this.nome, required this.categoria, required this.preco, this.quantidade = 0});
+  Produto({
+    required this.nome,
+    required this.categoria,
+    required this.preco,
+    required this.descricao,
+    this.quantidade = 0,
+  });
 }
-
 
 class ChipCategoria extends StatelessWidget {
   final String categoria;
@@ -66,6 +72,7 @@ class CardProduto extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Row(
           children: [
+            // Ícone da categoria
             Container(
               width: 50,
               height: 50,
@@ -80,6 +87,8 @@ class CardProduto extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
+
+            // Informações do produto
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,24 +111,49 @@ class CardProduto extends StatelessWidget {
                 ],
               ),
             ),
-            if (quantidadeNoCarrinho > 0) ...[
-              IconButton(
-                icon: const Icon(Icons.remove_circle_outline),
-                onPressed: aoRemover,
-                color: Colors.red,
-              ),
-              Text(
-                quantidadeNoCarrinho.toString(),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+
+            // Botões de adicionar, remover e ajuda
+            Column(
+              children: [
+                if (quantidadeNoCarrinho > 0) ...[
+                  IconButton(
+                    icon: const Icon(Icons.remove_circle_outline),
+                    onPressed: aoRemover,
+                    color: Colors.red,
+                  ),
+                  Text(
+                    quantidadeNoCarrinho.toString(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+                IconButton(
+                  icon: const Icon(Icons.add_circle_outline),
+                  onPressed: aoAdicionar,
+                  color: Colors.green,
                 ),
-              ),
-            ],
-            IconButton(
-              icon: const Icon(Icons.add_circle_outline),
-              onPressed: aoAdicionar,
-              color: Colors.green,
+                IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  color: Colors.blue,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text(produto.nome),
+                        content: Text(produto.descricao),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Fechar'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),
@@ -153,31 +187,32 @@ class PaginaInicial extends StatefulWidget {
 class _EstadoPaginaInicial extends State<PaginaInicial> {
   final List<String> categorias = ["Mercado", "Saúde", "Pets", "Móveis/Eletrodomésticos"];
   String categoriaSelecionada = "Mercado";
+
   final Map<String, List<Produto>> produtosPorCategoria = {
     "Mercado": [
-      Produto(nome: "Arroz", categoria: "Mercado", preco: 25.90),
-      Produto(nome: "Feijão", categoria: "Mercado", preco: 8.90),
-      Produto(nome: "Leite", categoria: "Mercado", preco: 4.50),
-      Produto(nome: "Pão", categoria: "Mercado", preco: 12.90),
-      Produto(nome: "Ovos", categoria: "Mercado", preco: 15.90),
+      Produto(nome: "Arroz", categoria: "Mercado", preco: 25.90, descricao: "Arroz branco tipo 1, pacote de 5kg."),
+      Produto(nome: "Feijão", categoria: "Mercado", preco: 8.90, descricao: "Feijão carioca, pacote de 1kg."),
+      Produto(nome: "Leite", categoria: "Mercado", preco: 4.50, descricao: "Leite integral, caixa de 1L."),
+      Produto(nome: "Pão", categoria: "Mercado", preco: 12.90, descricao: "Pão francês fresco, 1kg."),
+      Produto(nome: "Ovos", categoria: "Mercado", preco: 15.90, descricao: "Ovos brancos, bandeja com 30 unidades."),
     ],
     "Saúde": [
-      Produto(nome: "Remédios", categoria: "Saúde", preco: 45.90),
-      Produto(nome: "Vitaminas", categoria: "Saúde", preco: 35.90),
-      Produto(nome: "Máscaras", categoria: "Saúde", preco: 19.90),
-      Produto(nome: "Álcool Gel", categoria: "Saúde", preco: 15.90),
+      Produto(nome: "Remédios", categoria: "Saúde", preco: 45.90, descricao: "Medicamentos básicos para dor e febre."),
+      Produto(nome: "Vitaminas", categoria: "Saúde", preco: 35.90, descricao: "Suplemento vitamínico diário."),
+      Produto(nome: "Máscaras", categoria: "Saúde", preco: 19.90, descricao: "Máscaras de proteção descartáveis."),
+      Produto(nome: "Álcool Gel", categoria: "Saúde", preco: 15.90, descricao: "Álcool gel 70%, frasco de 500ml."),
     ],
     "Pets": [
-      Produto(nome: "Ração", categoria: "Pets", preco: 89.90),
-      Produto(nome: "Brinquedos", categoria: "Pets", preco: 29.90),
-      Produto(nome: "Petiscos", categoria: "Pets", preco: 19.90),
-      Produto(nome: "Areia para gatos", categoria: "Pets", preco: 39.90),
+      Produto(nome: "Ração", categoria: "Pets", preco: 89.90, descricao: "Ração premium para cães e gatos."),
+      Produto(nome: "Brinquedos", categoria: "Pets", preco: 29.90, descricao: "Brinquedos diversos para pets."),
+      Produto(nome: "Petiscos", categoria: "Pets", preco: 19.90, descricao: "Petiscos saborosos para pets."),
+      Produto(nome: "Areia para gatos", categoria: "Pets", preco: 39.90, descricao: "Areia higiênica para gatos."),
     ],
     "Móveis/Eletrodomésticos": [
-      Produto(nome: "Sofá", categoria: "Móveis/Eletrodomésticos", preco: 1299.90),
-      Produto(nome: "Geladeira", categoria: "Móveis/Eletrodomésticos", preco: 2499.90),
-      Produto(nome: "Fogão", categoria: "Móveis/Eletrodomésticos", preco: 899.90),
-      Produto(nome: "Cadeira", categoria: "Móveis/Eletrodomésticos", preco: 199.90),
+      Produto(nome: "Sofá", categoria: "Móveis/Eletrodomésticos", preco: 1299.90, descricao: "Sofá de 3 lugares, tecido suede."),
+      Produto(nome: "Geladeira", categoria: "Móveis/Eletrodomésticos", preco: 2499.90, descricao: "Geladeira Frost Free 310L."),
+      Produto(nome: "Fogão", categoria: "Móveis/Eletrodomésticos", preco: 899.90, descricao: "Fogão 4 bocas com acendimento automático."),
+      Produto(nome: "Cadeira", categoria: "Móveis/Eletrodomésticos", preco: 199.90, descricao: "Cadeira de madeira com assento estofado."),
     ]
   };
 

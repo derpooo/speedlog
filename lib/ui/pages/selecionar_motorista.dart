@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'barra_navegacao.dart';
+import 'track_vazia.dart';
+import 'selecionar_localizacao.dart';
 
 class Motorista {
   final String nome;
@@ -112,7 +114,13 @@ class CardMotorista extends StatelessWidget {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const BarraNavegacao()),
+                MaterialPageRoute(
+                  builder: (context) => SelecionarLocalizacao(
+                    nomeMotorista: motorista.nome,
+                    totalPedido: totalPedido,
+                    taxaEntrega: motorista.taxa,
+                  ),
+                ),
                 (route) => false,
               );
             },

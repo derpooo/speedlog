@@ -1,25 +1,38 @@
 import 'package:flutter/material.dart';
 import 'pagina_inicial.dart';
 import 'pagina_busca.dart';
+import 'meus_pedidos.dart';
 import 'pagina_perfil.dart';
 
 class BarraNavegacao extends StatefulWidget {
-  const BarraNavegacao({super.key});
+  final int initialIndex;
+  
+  const BarraNavegacao({
+    super.key,
+    this.initialIndex = 0,
+  });
 
   @override
   _BarraNavegacaoState createState() => _BarraNavegacaoState();
 }
 
 class _BarraNavegacaoState extends State<BarraNavegacao> {
-  final PageController _pageController = PageController();
-  int _indiceAtual = 0;
+  late final PageController _pageController;
+  late int _indiceAtual;
 
   final List<Widget> _pages = [
     PaginaInicial(),
     PaginaBusca(),
-    Container(color: Colors.black), 
+    MeusPedidos(),
     PagPerfil(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _indiceAtual = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
+  }
 
   @override
   void dispose() {
