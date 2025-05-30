@@ -1,72 +1,35 @@
 import 'package:flutter/material.dart';
 
-class ItemBusca extends StatelessWidget {
-  final String nome;
-  final VoidCallback aoSelecionar;
-
-  const ItemBusca({
-    super.key,
-    required this.nome,
-    required this.aoSelecionar,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: const Icon(Icons.shopping_basket, color: Colors.yellow),
-      title: Text(
-        nome,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-      ),
-      onTap: aoSelecionar,
-    );
-  }
-}
-
 class PaginaBusca extends StatefulWidget {
   const PaginaBusca({super.key});
 
   @override
-  _EstadoPaginaBusca createState() => _EstadoPaginaBusca();
+  _PaginaBuscaState createState() => _PaginaBuscaState();
 }
 
-class _EstadoPaginaBusca extends State<PaginaBusca> {
+class _PaginaBuscaState extends State<PaginaBusca> {
   String termoBusca = "";
 
-  final Map<String, List<String>> itensPorCategoria = const {
+  final Map<String, List<String>> itensPorCategoria = {
     "Mercado": ["Arroz", "Feijão", "Leite", "Pão", "Ovos"],
     "Saúde": ["Remédios", "Vitaminas", "Máscaras", "Álcool Gel"],
     "Pets": ["Ração", "Brinquedos", "Petiscos", "Areia para gatos"],
     "Móveis/Eletrodomésticos": ["Sofá", "Geladeira", "Fogão", "Cadeira"]
   };
 
-  List<String> get resultados => itensPorCategoria.values
-      .expand((lista) => lista)
-      .where((item) => item.toLowerCase().contains(termoBusca.toLowerCase()))
-      .toList();
-
-  void _mostrarMensagemSelecao(BuildContext context, String item) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Você selecionou "$item"',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    List<String> todosOsItens = itensPorCategoria.values.expand((list) => list).toList();
+    List<String> resultados = todosOsItens
+        .where((item) => item.toLowerCase().contains(termoBusca.toLowerCase()))
+        .toList();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: TextField(
           autofocus: true,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: 'Buscar itens...',
             border: InputBorder.none,
             hintStyle: TextStyle(
@@ -74,21 +37,43 @@ class _EstadoPaginaBusca extends State<PaginaBusca> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
-          onChanged: (valor) => setState(() => termoBusca = valor),
+          onChanged: (valor) {
+            setState(() {
+              termoBusca = valor;
+            });
+          },
         ),
-        iconTheme: const IconThemeData(color: Colors.yellow),
+        iconTheme: IconThemeData(color: Colors.yellow),
       ),
       body: ListView.builder(
         itemCount: resultados.length,
         itemBuilder: (context, index) {
-          final item = resultados[index];
-          return ItemBusca(
-            nome: item,
-            aoSelecionar: () => _mostrarMensagemSelecao(context, item),
+          String item = resultados[index];
+          return ListTile(
+            leading: Icon(Icons.shopping_basket, color: Colors.yellow),
+            title: Text(
+              item,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Você selecionou "$item"',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

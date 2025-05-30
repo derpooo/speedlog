@@ -3,69 +3,40 @@ import 'pagina_inicial.dart';
 import 'pagina_busca.dart';
 import 'pagina_perfil.dart';
 
-class ItemNavegacao extends StatelessWidget {
-  final IconData icone;
-  final bool selecionado;
-  final VoidCallback aoPressionar;
-
-  const ItemNavegacao({
-    super.key,
-    required this.icone,
-    required this.selecionado,
-    required this.aoPressionar,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        icone,
-        color: selecionado ? Colors.yellow : Colors.white,
-      ),
-      onPressed: aoPressionar,
-    );
-  }
-}
-
 class BarraNavegacao extends StatefulWidget {
   const BarraNavegacao({super.key});
 
   @override
-  _EstadoBarraNavegacao createState() => _EstadoBarraNavegacao();
+  _BarraNavegacaoState createState() => _BarraNavegacaoState();
 }
 
-class _EstadoBarraNavegacao extends State<BarraNavegacao> {
-  final PageController _controladorPagina = PageController();
+class _BarraNavegacaoState extends State<BarraNavegacao> {
+  final PageController _pageController = PageController();
   int _indiceAtual = 0;
 
-  final List<Widget> _paginas = [
+  final List<Widget> _pages = [
     PaginaInicial(),
     PaginaBusca(),
     Container(color: Colors.black), 
     PagPerfil(),
   ];
 
-  final List<IconData> _icones = const [
-    Icons.home,
-    Icons.search,
-    Icons.calendar_today,
-    Icons.person,
-  ];
-
   @override
   void dispose() {
-    _controladorPagina.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
-  void _aoMudarPagina(int indice) {
-    setState(() => _indiceAtual = indice);
+  void _onPageChanged(int index) {
+    setState(() {
+      _indiceAtual = index;
+    });
   }
 
-  void _aoPressionarItem(int indice) {
-    _controladorPagina.animateToPage(
-      indice,
-      duration: const Duration(milliseconds: 300),
+  void _onItemTapped(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
@@ -75,29 +46,43 @@ class _EstadoBarraNavegacao extends State<BarraNavegacao> {
     return Scaffold(
       extendBody: true,
       body: PageView(
-        controller: _controladorPagina,
-        onPageChanged: _aoMudarPagina,
-        children: _paginas,
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        children: _pages,
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+        padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(50),
           child: BottomAppBar(
             color: Colors.black,
-            shape: const CircularNotchedRectangle(),
+            shape: CircularNotchedRectangle(),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(
-                  _icones.length,
-                  (indice) => ItemNavegacao(
-                    icone: _icones[indice],
-                    selecionado: _indiceAtual == indice,
-                    aoPressionar: () => _aoPressionarItem(indice),
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.home, 
+                      color: _indiceAtual == 0 ? Colors.yellow : Colors.white),
+                    onPressed: () => _onItemTapped(0),
                   ),
-                ),
+                  IconButton(
+                    icon: Icon(Icons.search,
+                      color: _indiceAtual == 1 ? Colors.yellow : Colors.white),
+                    onPressed: () => _onItemTapped(1),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.calendar_today,
+                      color: _indiceAtual == 2 ? Colors.yellow : Colors.white),
+                    onPressed: () => _onItemTapped(2),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.person,
+                      color: _indiceAtual == 3 ? Colors.yellow : Colors.white),
+                    onPressed: () => _onItemTapped(3),
+                  ),
+                ],
               ),
             ),
           ),
